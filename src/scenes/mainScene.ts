@@ -102,10 +102,10 @@ export default class MainScene extends Phaser.Scene {
             case GameState.PLAYING:
                 break;
             case GameState.LOSE:
-                this.setStatusText(_("猫已经跑到地图边缘了，你输了"));
+                this.setStatusText(_("小赵孜已经跑到地图边缘了，你输了"));
                 break;
             case GameState.WIN:
-                this.setStatusText(_("猫已经无路可走，你赢了"));
+                this.setStatusText(_("小赵孜已经无路可走，你赢了"));
                 break;
             default:
                 return;
@@ -181,26 +181,26 @@ export default class MainScene extends Phaser.Scene {
             this.cat.anims.stop();
         }
         if (this.state !== GameState.PLAYING) {
-            this.setStatusText(_("游戏已经结束，重新开局"));
+            this.setStatusText(_("游戏已结束，重新抓赵孜"));
             this.reset();
             return false;
         }
         let block = this.getBlock(i, j);
         if (!block) {
-            this.setStatusText(_("代码错误，当前位置不存在"));
+            this.setStatusText(_("当前位置不存在"));
             return false;
         }
         if (block.isWall) {
-            this.setStatusText(_("点击位置已经是墙了，禁止点击"));
+            this.setStatusText(_("点击位置已经是墙了"));
             return false;
         }
         if (this.cat.i === i && this.cat.j === j) {
-            this.setStatusText(_("点击位置是猫当前位置，禁止点击"));
+            this.setStatusText(_("点击位置是赵孜当前位置"));
             return false;
         }
         block.isWall = true;
         if (this.cat.isCaught()) {
-            this.setStatusText(_("猫已经无路可走，你赢了"));
+            this.setStatusText(_("赵孜无路可逃了，你胜利了"));
             this.state = GameState.WIN;
             return false;
         }
@@ -211,7 +211,7 @@ export default class MainScene extends Phaser.Scene {
         this.setStatusText(_("您点击了 ") + `(${i}, ${j})`);
         let result = this.cat.step();
         if (!result) {
-            this.setStatusText(_("猫认输，你赢了！"));
+            this.setStatusText(_("赵孜放弃了，你胜利了！"));
             this.state = GameState.WIN;
         }
         return true;
@@ -227,7 +227,7 @@ export default class MainScene extends Phaser.Scene {
             wall: []
         };
         this.state = GameState.PLAYING;
-        this.setStatusText(_("点击小圆点，围住小猫"));
+        this.setStatusText(_("赵孜变成了小猫猫，点击小圆点，围住情绪失控的赵孜"));
     }
 
     undo() {
@@ -243,7 +243,7 @@ export default class MainScene extends Phaser.Scene {
                 this.getBlock(i, j).isWall = false;
             }
         } else {
-            this.setStatusText(_("无路可退！！！"));
+            this.setStatusText(_("无路可退！"));
         }
     }
     private setStatusText(message: string) {
